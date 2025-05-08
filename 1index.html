@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wish Card</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url('https://images.unsplash.com/photo-1523510468197-455cc987be86?q=80');
+      background-size: cover;
+      background-position: center;
+      font-family: 'Indie Flower', cursive;
+      margin: 0;
+    }
+
+    button {
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      background-color: #2563EB;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1D4ED8;
+      transform: scale(1.1);
+    }
+
+    .fade-out {
+      animation: fadeOut 1s forwards;
+    }
+
+    @keyframes fadeOut {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.2);
+      }
+    }
+  </style>
+</head>
+<body>
+  <button id="openCardButton" onclick="openCard()">Open</button>
+
+  <script>
+    function openCard() {
+      const button = document.getElementById('openCardButton');
+      button.classList.add('fade-out');
+      setTimeout(function() {
+        window.location.href = 'index.html';
+      }, 1000);  // 1-second delay before navigating
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    function launchConfetti() {
+      const duration = 3 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
+
+      const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        const particleCount = 50 * (timeLeft / duration);
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+      }, 250);
+    }
+
+    function openCard() {
+      const button = document.getElementById('openCardButton');
+      button.classList.add('fade-out');
+      launchConfetti(); // Launch confetti on click
+      setTimeout(function() {
+        window.location.href = 'index.html';
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>
